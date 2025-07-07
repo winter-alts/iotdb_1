@@ -45,6 +45,10 @@ public class RelationalAuthorStatement extends Statement {
 
   private boolean grantOption;
 
+  private String labelPolicyExpression;
+
+  private String labelPolicyScope;
+
   public RelationalAuthorStatement(
       AuthorRType authorType,
       String userName,
@@ -154,6 +158,22 @@ public class RelationalAuthorStatement extends Statement {
 
   public void setPassword(String password) {
     this.password = password;
+  }
+
+  public String getLabelPolicyExpression() {
+    return labelPolicyExpression;
+  }
+
+  public void setLabelPolicyExpression(String labelPolicyExpression) {
+    this.labelPolicyExpression = labelPolicyExpression;
+  }
+
+  public String getLabelPolicyScope() {
+    return labelPolicyScope;
+  }
+
+  public void setLabelPolicyScope(String labelPolicyScope) {
+    this.labelPolicyScope = labelPolicyScope;
   }
 
   @Override

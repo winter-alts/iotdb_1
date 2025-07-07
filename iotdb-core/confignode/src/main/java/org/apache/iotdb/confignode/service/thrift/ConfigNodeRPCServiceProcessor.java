@@ -626,7 +626,8 @@ public class ConfigNodeRPCServiceProcessor implements IConfigNodeRPCService.Ifac
     if (req.getAuthorType() < 0 || req.getAuthorType() >= AuthorType.values().length) {
       throw new IndexOutOfBoundsException("Invalid Author Type ordinal");
     }
-    return configManager.operatePermission(
+
+    AuthorTreePlan authorTreePlan =
         new AuthorTreePlan(
             ConfigPhysicalPlanType.values()[
                 req.getAuthorType() + ConfigPhysicalPlanType.CreateUser.ordinal()],
@@ -636,7 +637,15 @@ public class ConfigNodeRPCServiceProcessor implements IConfigNodeRPCService.Ifac
             req.getNewPassword(),
             req.getPermissions(),
             req.isGrantOpt(),
-            AuthUtils.deserializePartialPathList(ByteBuffer.wrap(req.getNodeNameList()))));
+            AuthUtils.deserializePartialPathList(ByteBuffer.wrap(req.getNodeNameList())));
+    if (req.isSetLabelPolicyExpression()) {
+      authorTreePlan.setLabelPolicyExpression(req.getLabelPolicyExpression());
+    }
+    if (req.isSetLabelPolicyScope()) {
+      authorTreePlan.setLabelPolicyScope(req.getLabelPolicyScope());
+    }
+
+    return configManager.operatePermission(authorTreePlan);
   }
 
   @Override
